@@ -38,13 +38,11 @@ export default class TrailshredRecordForm extends NavigationMixin(LightningEleme
         this.clearRecordCache();
         this.addRecordToCache(newRecord);
 
-        // Розділяємо правила на конкретні значення і порожні (any value)
         const specificValueSettings = this.trailshredFieldValueSettings.filter(s => s.Field_Value__c && s.Field_Value__c.trim() !== '');
         const anyValueSettings = this.trailshredFieldValueSettings.filter(s => !s.Field_Value__c || s.Field_Value__c.trim() === '');
 
         let matched = false;
 
-        // Спочатку перевіряємо конкретні значення
         for (let setting of specificValueSettings) {
             let fieldName = setting.Field_Name__r.QualifiedApiName;
             if (fieldName.startsWith(this.objectApiName + '.')) {
@@ -69,7 +67,6 @@ export default class TrailshredRecordForm extends NavigationMixin(LightningEleme
             }
         }
 
-        // Якщо конкретних правил не було збігів, перевіряємо "any value"
         if (!matched) {
             for (let setting of anyValueSettings) {
                 let fieldName = setting.Field_Name__r.QualifiedApiName;
@@ -99,7 +96,6 @@ export default class TrailshredRecordForm extends NavigationMixin(LightningEleme
         this.playAudioFilesInSequence(audios)();
     }
 }
-
 
     onSettingsLoaded(settings) {
         if (settings && settings.length > 0) {
